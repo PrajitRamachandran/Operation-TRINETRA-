@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convoy Command System</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container" class="hidden">
+        <nav id="sidebar">
+            <h1 class="logo">CONVOY CMD</h1>
+            <ul id="nav-links">
+                <li><a href="#" data-view="dashboard-view">📊 Dashboard</a></li>
+                <li><a href="#" data-view="convoys-view">🚚 Convoys</a></li>
+                <li><a href="#" data-view="threats-view">💥 Threats</a></li>
+                <li><a href="#" data-view="routes-view">🗺️ Routes</a></li>
+                <li><a href="#" data-view="alerts-view">🚨 Alerts</a></li>
+                <li><a href="#" data-view="missions-view">📜 Missions</a></li>
+                <li><a href="#" data-view="settings-view">⚙️ Settings</a></li>
+                <li><a href="#" data-view="simulation-view">🔬 Simulation</a></li>
+            </ul>
+        </nav>
+
+        <div id="main-content">
+            <header id="header">
+                <div id="user-info">Welcome, <span id="username-display"></span> (<span id="role-display"></span>)</div>
+                <button id="logout-button">Logout</button>
+            </header>
+
+            <main id="content-views">
+                <div id="dashboard-view" class="view">
+                    <h2>Operational Dashboard</h2>
+                    <div id="stats-grid" class="grid"></div>
+                    <div id="dashboard-map" class="map-container"></div>
+                </div>
+
+                <div id="convoys-view" class="view hidden">
+                    <h2>Active Convoys</h2>
+                    <div id="convoys-list"></div>
+                </div>
+                
+                <div id="threats-view" class="view hidden">
+                    <h2>Threat Intelligence</h2>
+                    <div id="threats-list"></div>
+                </div>
+
+                <div id="routes-view" class="view hidden">
+                    <h2>Route Planning</h2>
+                    <form id="route-form">
+                        <input type="text" id="start-coords" placeholder="Start Lat, Lon (e.g., 13.0, 80.2)">
+                        <input type="text" id="end-coords" placeholder="End Lat, Lon (e.g., 13.1, 80.3)">
+                        <select id="route-mode">
+                            <option value="balance">Balance</option>
+                            <option value="stealth">Stealth</option>
+                            <option value="speed">Speed</option>
+                        </select>
+                        <button type="submit">Get Route</button>
+                    </form>
+                    <div id="route-results"></div>
+                    <div id="route-map" class="map-container"></div>
+                </div>
+
+                <div id="alerts-view" class="view hidden">
+                    <h2>Active Alerts</h2>
+                    <div id="alerts-list"></div>
+                </div>
+                
+                <div id="missions-view" class="view hidden">
+                    <h2>Mission Archives</h2>
+                    <div id="missions-list"></div>
+                </div>
+
+                <div id="settings-view" class="view hidden">
+                    <h2>System Settings</h2>
+                    <div id="user-management-section"></div>
+                </div>
+                
+                <div id="simulation-view" class="view hidden">
+                    <h2>Simulation & Testing</h2>
+                    <div id="simulation-controls" class="grid"></div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="login-container">
+        <form id="login-form">
+            <h2>Convoy Command Login</h2>
+            <p id="login-error" class="error"></p>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

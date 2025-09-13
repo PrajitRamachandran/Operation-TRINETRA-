@@ -1,0 +1,207 @@
+/* Basic Reset & Theming */
+:root {
+    --bg-darkest: #111827;
+    --bg-dark: #1f2937;
+    --border-color: #374151;
+    --text-light: #f3f4f6;
+    --text-muted: #9ca3af;
+    --primary-color: #3b82f6;
+    --danger-color: #ef4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-darkest);
+    color: var(--text-light);
+    display: flex;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.error {
+    color: var(--danger-color);
+    margin-bottom: 1rem;
+    font-size: 0.9em;
+}
+
+/* Login Form */
+#login-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#login-form {
+    background: var(--bg-dark);
+    padding: 2rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid var(--border-color);
+}
+
+/* Main App Layout */
+#app-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+#sidebar {
+    width: 250px;
+    background: var(--bg-darkest);
+    border-right: 1px solid var(--border-color);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#sidebar .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#sidebar ul {
+    list-style: none;
+}
+
+#sidebar ul li a {
+    display: block;
+    padding: 0.75rem 1rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+#sidebar ul li a:hover, #sidebar ul li a.active {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+}
+
+#main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+}
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: var(--bg-dark);
+    border-bottom: 1px solid var(--border-color);
+}
+
+#content-views {
+    flex-grow: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+}
+
+.view h2 {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+
+/* Forms & Buttons */
+input, select {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--bg-darkest);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+}
+
+button {
+    padding: 0.75rem 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button.danger {
+    background-color: var(--danger-color);
+}
+
+/* Grid & Cards */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.card {
+    background: var(--bg-dark);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.card p {
+    color: var(--text-muted);
+}
+
+/* Map */
+.map-container {
+    height: 400px;
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    background-color: var(--bg-dark);
+}
+
+.leaflet-container {
+    background: var(--bg-dark);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #app-container {
+        flex-direction: column;
+    }
+    #sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    #sidebar ul {
+        display: flex;
+        overflow-x: auto;
+    }
+    #sidebar .logo {
+        margin-bottom: 0;
+    }
+}
