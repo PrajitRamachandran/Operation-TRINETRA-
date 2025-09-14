@@ -1,0 +1,64 @@
+services:
+  # Database Service
+  mysql:
+    image: mysql:8.0
+    container_name: convoy_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-convoy_root_pass}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-convoy_routing}
+      MYSQL_USER: ${MYSQL_USER:-convoy_user}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-convoy_pass}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./Back-End/convoy_routing_service/data_processing:/docker-entrypoint-initdb.d
+    networks:
+      - convoy_network
+    restart: unless-stopped
+
+  # Backend API Service
+  backend:
+    build:
+      context: ./Back-End/convoy_routing_service
+      dockerfile: Dockerfile
+    container_name: convoy_backend
+    environment:
+      DATABASE_URL: mysql+pymysql://${MYSQL_USER:-convoy_user}:${MYSQL_PASSWORD:-convoy_pass}@mysql:3306/${MYSQL_DATABASE:-convoy_routing}
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key-change-in-production}
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
+      REFRESH_TOKEN_EXPIRE_DAYS: 7
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+    networks:
+      - convoy_network
+    restart: unless-stopped
+    volumes:
+      - ./Back-End/convoy_routing_service/logs:/app/logs
+
+  # Frontend Service (Nginx)
+  frontend:
+    build:
+      context: ./Front-End
+      dockerfile: Dockerfile
+    container_name: convoy_frontend
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+    networks:
+      - convoy_network
+    restart: unless-stopped
+    volumes:
+      - ./ssl:/etc/nginx/ssl:ro
+
+volumes:
+  mysql_data:
+
+networks:
+  convoy_network:
+    driver: bridge

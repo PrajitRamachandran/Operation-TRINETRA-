@@ -6,7 +6,7 @@ from ..core.config import settings
 # Use the lowercase attribute from the Settings object
 engine = create_engine(settings.database_url) # <-- CHANGED
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=True, autoflush=True, bind=engine)
 Base = declarative_base()
 
 def get_db():
